@@ -1,0 +1,70 @@
+def get_health_tips(bpm, temperature, bmi):
+    tips = []
+    
+    # Heart Rate Check
+    if bpm < 60:
+        tips.append("Your heart rate is lower than normal. Consider consulting a doctor.")
+    elif bpm > 100:
+        tips.append("Your heart rate is high. Reduce stress and monitor regularly.")
+    else:
+        tips.append("Your heart rate is within a healthy range.")
+
+    # Temperature Check
+    if temperature < 36.5:
+        tips.append("Your body temperature is low. Stay warm and monitor.")
+    elif temperature > 37.5:
+        tips.append("You may have a fever. Stay hydrated and consider seeing a doctor.")
+    else:
+        tips.append("Your body temperature is normal.")
+
+    # BMI Check
+    if bmi < 18.5:
+        tips.append("You are underweight. Consider a nutrient-rich diet.")
+    elif 18.5 <= bmi <= 24.9:
+        tips.append("You have a normal weight. Keep up the good work!")
+    elif 25 <= bmi <= 29.9:
+        tips.append("You are overweight. Exercise regularly and watch your diet.")
+    else:
+        tips.append("You are obese. Consult a healthcare provider for a proper plan.")
+    
+    return tips
+
+def generate_prescription(name, age, gender, height, weight, bpm, temperature):
+    bmi = weight / ((height / 100) ** 2)
+    
+    prescription = f"""
+    Health Report for {name}:
+    --------------------------------
+    Age: {age} years
+    Gender: {gender}
+    Height: {height} cm
+    Weight: {weight} kg
+    BMI: {bmi:.2f}
+    Heart Rate (BPM): {bpm}
+    Body Temperature: {temperature}°C
+    """
+    
+    health_tips = get_health_tips(bpm, temperature, bmi)
+    tips_section = "\n".join(f"- {tip}" for tip in health_tips)
+    
+    prescription += f"""
+    Health Tips:
+    {tips_section}
+    --------------------------------
+    """
+    
+    return prescription
+
+# Input
+print("Enter the following details:")
+name = input("Name: ")
+age = int(input("Age: "))
+gender = input("Gender (Male/Female/Other): ")
+height = float(input("Height (in cm): "))
+weight = float(input("Weight (in kg): "))
+bpm = int(input("Heart Rate (BPM): "))
+temperature = float(input("Body Temperature (in °C): "))
+
+# Output
+result = generate_prescription(name, age, gender, height, weight, bpm, temperature)
+print(result)
